@@ -5,8 +5,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.NetworkCapabilities.*
 import android.widget.Toast
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
 
 fun Context.isNetworkAvailable(): Boolean {
 
@@ -28,9 +26,6 @@ fun NetworkCapabilities.hasAnyOneTransport(vararg transport: Int): Boolean {
     }
     return value
 }
-
-fun Context.getColorCompat(@ColorRes colorResId: Int): Int =
-    ContextCompat.getColor(this, colorResId)
 
 fun Context.dpToPx(dp: Float) = dp * resources.displayMetrics.density
 

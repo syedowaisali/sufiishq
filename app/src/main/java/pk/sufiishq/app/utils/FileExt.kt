@@ -3,9 +3,6 @@ package pk.sufiishq.app.utils
 import VideoHandle.EpEditor
 import VideoHandle.OnEditorListener
 import io.reactivex.Completable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.apache.commons.io.IOUtils
 import timber.log.Timber
 import java.io.File
@@ -23,11 +20,15 @@ fun File.deleteContent() {
         name.endsWith("mp3")
     }?.forEach {
         try {
-            File("$absolutePath/$it").delete()
+            absolutePath.toFile(it).delete()
         } catch (ex: Exception) {
             Timber.e(ex)
         }
     }
+}
+
+fun String.toFile(filename: String): File {
+    return File(this, filename)
 }
 
 fun File.split(
@@ -42,18 +43,16 @@ fun File.split(
         0,
         object : OnEditorListener {
             override fun onSuccess() {
-                CoroutineScope(Dispatchers.Main).launch {
-                    onComplete(SPLIT_SUCCESS)
-                }
+                onComplete(SPLIT_SUCCESS)
             }
 
             override fun onFailure() {
-                CoroutineScope(Dispatchers.Main).launch {
-                    onComplete(SPLIT_CANCEL)
-                }
+                onComplete(SPLIT_CANCEL)
             }
 
-            override fun onProgress(progress: Float) { /* no comment */ }
+            override fun onProgress(progress: Float) {
+                onComplete(SPLIT_IN_PROGRESS)
+            }
         }
     )
 }

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
 import org.junit.Assert.*
 import org.junit.Test
 import pk.sufiishq.app.SufiIshqTest
@@ -115,9 +114,6 @@ class UtilExtTest : SufiIshqTest() {
         }
 
         assertTrue(kalam.canPlay(context))
-
-        unmockkStatic(Context::isNetworkAvailable)
-        unmockkStatic(Kalam::hasOfflineSource)
     }
 
     @Test
@@ -136,10 +132,6 @@ class UtilExtTest : SufiIshqTest() {
         }
 
         assertFalse(kalam.canPlay(context))
-
-        unmockkStatic(Context::isNetworkAvailable)
-        mockkStatic(Context::toast)
-        unmockkStatic(Kalam::hasOfflineSource)
     }
 
     private fun verifyKalamAssertion(

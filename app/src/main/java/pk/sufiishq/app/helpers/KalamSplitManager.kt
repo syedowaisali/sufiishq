@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import pk.sufiishq.app.SufiIshqApp
 import pk.sufiishq.app.models.Kalam
-import pk.sufiishq.app.utils.CACHE_SPLIT_FILENAME
-import pk.sufiishq.app.utils.SPLIT_SUCCESS
-import pk.sufiishq.app.utils.formatTime
-import pk.sufiishq.app.utils.split
+import pk.sufiishq.app.utils.*
 import java.io.File
 import javax.inject.Inject
 
@@ -60,9 +57,11 @@ class KalamSplitManager @Inject constructor(@ApplicationContext val appContext: 
                 (splitEnd.value!! - splitStart.value!!).formatTime
             ) { returnCode ->
 
+                if (returnCode == SPLIT_IN_PROGRESS) return@split
+
                 if (returnCode == SPLIT_SUCCESS) {
                     val duration = mediaPlayer.getDuration(outFile.absolutePath)
-                    kalamPreviewLength.value = duration
+                    kalamPreviewLength.postValue(duration)
                 }
 
                 setSplitStatus(SplitCompleted(returnCode))
@@ -98,7 +97,7 @@ class KalamSplitManager @Inject constructor(@ApplicationContext val appContext: 
             mediaPlayer.pause()
             previewPlayStart.value = false
         }
-        splitStatus.value = status
+        splitStatus.postValue(status)
     }
 
     fun updateSeekbarValue(value: Float) {
