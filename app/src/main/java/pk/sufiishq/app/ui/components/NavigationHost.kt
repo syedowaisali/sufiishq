@@ -15,6 +15,7 @@ import pk.sufiishq.app.R
 import pk.sufiishq.app.data.providers.PlayerDataProvider
 import pk.sufiishq.app.helpers.Screen
 import pk.sufiishq.app.ui.screen.DashboardView
+import pk.sufiishq.app.ui.screen.HelpView
 import pk.sufiishq.app.ui.screen.PlaylistView
 import pk.sufiishq.app.ui.screen.TracksView
 import pk.sufiishq.app.viewmodels.KalamViewModel
@@ -81,6 +82,11 @@ fun NavigationHost(playerDataProvider: PlayerDataProvider, navController: NavHos
                     playlistDataProvider = playlistViewModel,
                     navController = navController
                 )
+            }
+
+            // help screen
+            composable(Screen.Help.route) {
+                HelpView()
             }
         }
     }

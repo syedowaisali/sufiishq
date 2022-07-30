@@ -4,6 +4,7 @@ sealed class Screen(val route: String) {
 
     object Dashboard : Screen("screen_dashboard")
     object Playlist : Screen("screen_playlist")
+    object Help : Screen("screen_help")
     object Tracks : Screen("screen_tracks") {
 
         // params

@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import pk.sufiishq.app.R
 import pk.sufiishq.app.data.providers.PlayerDataProvider
+import pk.sufiishq.app.helpers.Screen
 import pk.sufiishq.app.ui.components.NavigationHost
 import pk.sufiishq.app.ui.components.Player
 
@@ -34,6 +35,16 @@ fun MainView(playerDataProvider: PlayerDataProvider) {
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.hp_logo),
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = {
+                            navController.navigate(Screen.Help.route)
+                        }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_outline_help_outline_24),
                                 contentDescription = null
                             )
                         }
